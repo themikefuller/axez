@@ -68,7 +68,7 @@ const createFrame = (frameData={}) => {
     frame.push(content[i]);
   }
   frame.push(192);
-  return frame;
+  return new Uint8Array(frame);
 };
 
 const readFrame = (data) => {
