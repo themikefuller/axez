@@ -14,7 +14,7 @@ const createFrame = (frameData={}) => {
   }
 
   let destinationSSID = (frameData.destinationSSID < 16 && frameData.destinationSSID > -1 ? frameData.destinationSSID : 0)
-  frame.push(96 + (destinationSSID * 2));
+  frame.push(224 + (destinationSSID * 2));
 
   let source = (frameData.source.toString().toLocaleUpperCase() + "      ").split('').map(val=>{
     return val.charCodeAt(0) * 2;
@@ -77,7 +77,7 @@ const readFrame = (data) => {
   frame.destination = result.slice(2,8).map(val=>{
     return String.fromCharCode(val/2);
   }).join('').trim();
-  frame.destinationSSID = result.slice(8)[0] - 97;
+  frame.destinationSSID = result.slice(8)[0] - 225;
   frame.destinationSSID = (frame.destinationSSID > 0) ? parseInt(frame.destinationSSID / 2) + 1 : 0;
 
   frame.source = result.slice(9, 15).map(val=>{
