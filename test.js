@@ -31,13 +31,13 @@ let repeaterTest = {
 
 let aprsTest = {
   "source": "NOCALL",
-  "destination" :"NOCALL",
-  "sourceSSID" : 7,
+  "destination" :"APRS",
+  "sourceSSID" : 15,
   "destinationSSID" : 1,
   "message" : ":NOCALL-15:Hello World",
   "repeaters" : [
     {"callsign":"WIDE1","ssid":1},
-    {"callsign":"WIDE2","ssid":2}
+    {"callsign":"WIDE2","ssid":1}
   ],
   "aprs" : true
 };
@@ -46,9 +46,9 @@ let aprsTest = {
 Un-comment the test to conduct and comment out the other test.
 */
 
-let test = simpleTest;
+//let test = simpleTest;
 //let test = repeaterTest;
-//let test = aprsTest;
+let test = aprsTest;
 
 const client = new require('net').Socket();
 client.connect(8001, 'localhost', ()=>{
