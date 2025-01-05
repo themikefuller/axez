@@ -1,5 +1,6 @@
 'use strict';
 
+function AXEZ() {
 const createFrame = (frameData={}) => {
 
   let frame = [192, 0];
@@ -136,8 +137,11 @@ const readFrame = (data) => {
   return frame;
 }
 
-function AXEZ() {
+
   return {readFrame, createFrame};
+
 }
 
-module.exports = AXEZ;
+if (typeof module !== 'undefined' && module && module.exports) {
+  module.exports = AXEZ;
+}
