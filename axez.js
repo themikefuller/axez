@@ -1,7 +1,5 @@
 'use strict';
 
-const {SerialPort} = require('serialport');
-
 const createFrame = (frameData={}) => {
 
   let frame = [192, 0];
@@ -138,26 +136,8 @@ const readFrame = (data) => {
   return frame;
 }
 
-const openPort = (kissPath, baudRate=1200) => {
-  return new Promise((resolve,reject) =>{
-
-    let onData = null;
-
-    let serialPort = new SerialPort({
-      "path": kissPath,
-      "baudRate": baudRate,
-      "lock": false
-    });
-
-    serialPort.on('open', ()=>{
-      resolve(serialPort);
-    });
-
-  });
-};
-
 function AXEZ() {
-  return {readFrame, createFrame, openPort};
+  return {readFrame, createFrame};
 }
 
 module.exports = AXEZ;

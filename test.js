@@ -50,14 +50,15 @@ let test = simpleTest;
 //let test = repeaterTest;
 //let test = aprsTest;
 
-axez.openPort('/tmp/kisstnc').then(port=>{
-  port.on('data', (data)=>{
+const client = new require('net').Socket();
+client.connect(8001, 'localhost', ()=>{
+  client.on('data', (data)=>{
     let frame = axez.readFrame(data);
     console.log(frame);
   });
   setInterval(()=>{
     let frame = axez.createFrame(test);
-    port.write(frame, (err) => {
+    client.write(new Uint8Array(frame), (err) => {
       console.log(err||"Sent!");
     });
   }, 5000);
