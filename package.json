@@ -1,8 +1,9 @@
 {
   "name": "axez",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Simple AX.25 Implementation for Packet Radio",
   "main": "index.js",
+  "browser": "axez.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
