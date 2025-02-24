@@ -34,7 +34,7 @@ let aprsTest = {
   "destination" :"APRS",
   "sourceSSID" : 15,
   "destinationSSID" : 1,
-  "message" : ":NOCALL-15:Hello World",
+  "message" : "::NOCALL-10:Hello, Old Friend",
   "repeaters" : [
     {"callsign":"WIDE1","ssid":1},
     {"callsign":"WIDE2","ssid":1}
@@ -50,16 +50,7 @@ Un-comment the test to conduct and comment out the other test.
 //let test = repeaterTest;
 let test = aprsTest;
 
-const client = new require('net').Socket();
-client.connect(8001, 'localhost', ()=>{
-  client.on('data', (data)=>{
-    let frame = axez.readFrame(data);
-    console.log(frame);
-  });
-  setInterval(()=>{
-    let frame = axez.createFrame(test);
-    client.write(new Uint8Array(frame), (err) => {
-      console.log(err||"Sent!");
-    });
-  }, 5000);
-});
+console.log(test);
+let frame = axez.createFrame(test);
+console.log(frame);
+console.log(axez.readFrame(frame));

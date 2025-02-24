@@ -97,39 +97,31 @@ const readFrame = (data) => {
   if (hasRepeaters) {
     let tail = result.slice(16, result.length - 1);
     let parts = [];
-    for(let i = 0; i < tail.length; i += 7) {
-      parts.push(tail.slice(i, i + 7));
+    for (let i = 0; i < tail.length; i += 7) {
+        parts.push(tail.slice(i, i + 7));
     }
-    let allFound = false;
-    for(let j = 0; j < parts.length; j++) {
-      if (parts[j].length < 7 || (parts[j][0] % 2 !== 0 && parts[j][0] !== 0)) {
-        repeaters = parts.slice(0,j);
-        break;
-      }
-      let odds = 0;
-      for(let k = 0; k < parts[j].length; k++) {
-        if (parts[j][k] % 2 !== 0) {
-          odds++;
-          if (odds === 2) {
-            allFound = true;
-            repeaters = parts.slice(0,j);
+
+    for (let j = 0; j < parts.length; j++) {
+        if (parts[j].length < 7) {
             break;
-          }
         }
-      }
-      if (allFound) {
-        break;
-      }
+        let callsign = parts[j]
+            .slice(0, 6)
+            .map((val) => {
+                return String.fromCharCode((val >> 1) & 0x7F);
+            })
+            .join("")
+            .trim();
+        let ssid = (parts[j].slice(6)[0] >> 1) & 0x0F;
+        repeaters.push({ callsign, ssid });
+
+        if ((parts[j][6] & 0x01) === 0x01) {
+            break;
+        }
     }
-    for(let i = 0; i < repeaters.length; i++) {
-      let callsign = repeaters[i].slice(0,6).map(val=>{return String.fromCharCode(val/2);}).join('').trim();
-      let ssid = parseInt(repeaters[i].slice(6)[0]/2);
-      repeaters[i] = {callsign, ssid};
-    }
-    position += (7 * repeaters.length);
+    position += 7 * repeaters.length;
   }
   frame.repeaters = repeaters;
-
 
   frame.message = result.slice(position, -1).map(val=>{
     return String.fromCharCode(val);

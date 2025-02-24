@@ -1,6 +1,6 @@
 {
   "name": "axez",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Simple AX.25 Implementation for Packet Radio",
   "main": "index.js",
   "browser": "axez.min.js",
